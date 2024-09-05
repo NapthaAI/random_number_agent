@@ -1,8 +1,8 @@
-name: template
-type: template
+name: random_number_agent
+type: random_number_agent
 author: naptha
 version: 0.1.0
-description: Base template for new tasks and flows.
+description: Agent for generating random numbers.
 license: MIT
 
 models:
