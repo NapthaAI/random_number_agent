@@ -25,7 +25,7 @@ class RandomParticipant():
         return str(random.randint(0, self.max_value))
 
 
-def run(inputs, worker_node_urls=None, orchestrator_node=None, flow_run=None, cfg=None, task_engine_cls=None, node_cls=None):
+def run(inputs, *args, **kwargs):
     logger.info(f"Inputs: {inputs}")
     agent = RandomParticipant(name=inputs.agent_name)
     response = agent.generate_random_response()
