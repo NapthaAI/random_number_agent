@@ -1,10 +1,12 @@
 #!/usr/bin/env python
-from naptha_sdk.utils import get_logger, load_yaml
+import logging
 import random
 from random_number_agent.schemas import InputSchema
 import time
+from naptha_sdk.utils import load_yaml
+from naptha_sdk.schemas import AgentRunInput
 
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 class RandomParticipant():
     """A fake participant who generates number randomly."""
@@ -25,9 +27,9 @@ class RandomParticipant():
         return str(random.randint(0, self.max_value))
 
 
-def run(inputs, *args, **kwargs):
-    logger.info(f"Inputs: {inputs}")
-    agent = RandomParticipant(name=inputs.agent_name)
+def run(agent_run: AgentRunInput, *args, **kwargs):
+    logger.info(f"Inputs: {agent_run.inputs}")
+    agent = RandomParticipant(name=agent_run.inputs.agent_name)
     response = agent.generate_random_response()
     return response
 
