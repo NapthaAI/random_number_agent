@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import logging
 import random
-from random_number_agent.schemas import InputSchema
 import time
+from typing import Dict
+from random_number_agent.schemas import InputSchema
 from naptha_sdk.utils import load_yaml
 from naptha_sdk.schemas import AgentRunInput
 
@@ -27,11 +28,13 @@ class RandomParticipant():
         return str(random.randint(0, self.max_value))
 
 
-def run(agent_run: AgentRunInput, *args, **kwargs):
-    logger.info(f"Inputs: {agent_run.inputs}")
-    agent = RandomParticipant(name=agent_run.inputs.agent_name)
-    response = agent.generate_random_response()
+async def run(module_run: Dict, *args, **kwargs):
+    module_run = AgentRunInput(**module_run)
+    module_run.inputs = InputSchema(**module_run.inputs)
+    random_agent = RandomParticipant(name=module_run.inputs.agent_name)
+    response = random_agent.generate_random_response()
     return response
+
 
 if __name__ == "__main__":
     cfg_path = "random_number_agent/component.yaml"
